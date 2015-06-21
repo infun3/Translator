@@ -66,11 +66,16 @@ class DefaultController extends Controller
 
     public function actionMain($id)
     {
-        $sourceLang=Yii::$app->params['src'];
-        $destinationLang=Yii::$app->params['dst'];
-        $model = $this->findTranslation($destinationLang, $id);
-        $model['source'] = $this->findTranslation($sourceLang, $id)->str;
-        if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($sourceLang, $destinationLang, $model['source'])['text'][0];}
+        $direction= $this->getDirections(Yii::$app->user->identity->getId());
+        $sourceLang=$direction['src'];
+        $destinationLang=$direction['dst'];
+
+
+        $model = $this->findTranslation($direction['dst'], $id);
+        $model['src'] = $direction['src'];
+        $model['dst'] = $direction['dst'];
+        $model['source'] = $this->findTranslation($model['src'], $id)->str;
+        if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($model['src'], $model['dst'], $model['source'])['text'][0];}
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['main', 'id' => $model->id+1]);
@@ -82,14 +87,21 @@ class DefaultController extends Controller
     }
     protected function findTranslation($lng, $id)
     {
-         $model = Translate::setTableName($lng);
-        if (($model = Translate::findOne($id)) !== null) {
-            return $model;
-        } else {
-            return $this->redirect(['main']);
-//            throw new NotFoundHttpException('DND.');
-//            throw new NotFoundHttpException('The requested page does not exist.');
+      $model = Translate::setTableName($lng);
+
+            if (($model = Translate::findOne($id)) !== null) {
+                return $model;
+            } else {
+                //            return $this->redirect(['main']);
+                throw new NotFoundHttpException('need more vars'.PHP_EOL.$lng.PHP_EOL.$id);
+                //            throw new NotFoundHttpException('The requested page does not exist.');
+            }
         }
+    protected function getDirections($id)
+    {
+        return  (new \yii\db\Query())->select(['src','dst'])->from('translators')->where(['id' => $id])->one();
     }
+
+
 
 }

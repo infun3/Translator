@@ -19,6 +19,8 @@ class Translate extends \yii\db\ActiveRecord
      * @inheritdoc
      */
 	public $source;
+	public $src;
+	public $dst;
 	public $yandex;
 	protected static $table;
 
@@ -55,5 +57,9 @@ class Translate extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'alert' => 'Alert',
         ];
+    }
+    public function getDirections($id)
+    {
+        return  (new \yii\db\Query())->select(['src','dst'])->from('translators')->where(['id' => $id])->one();
     }
 }
