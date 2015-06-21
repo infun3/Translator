@@ -70,9 +70,7 @@ class DefaultController extends Controller
         $destinationLang=Yii::$app->params['dst'];
         $model = $this->findTranslation($destinationLang, $id);
         $model['source'] = $this->findTranslation($sourceLang, $id)->str;
-        if(strlen($model->str)<=1){
-            $model['yandex'] =Yii::$app->translate->translate($sourceLang, $destinationLang, $model['source'])['text'][0];}
-
+        if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($sourceLang, $destinationLang, $model['source'])['text'][0];}
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['main', 'id' => $model->id+1]);
