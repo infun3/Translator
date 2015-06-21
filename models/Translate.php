@@ -38,7 +38,7 @@ class Translate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['str', 'user_id'], 'required'],
+            [['user_id'], 'required'],
             [['str'], 'string'],
             [['user_id', 'alert'], 'integer']
         ];
