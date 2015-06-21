@@ -18,7 +18,8 @@ class Translate extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-	public $src;
+	public $source;
+	public $yandex;
 	protected static $table;
 
 	public static function tableName()

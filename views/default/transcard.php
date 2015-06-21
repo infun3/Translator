@@ -15,20 +15,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+
+
 	<div class="panel panel-default">
 		 <div class="panel-heading">
 			<h3 class="panel-title">$src</h3>
 		</div>
 		<div class="panel-body">
-			<?= $model->src ?>
+			<?= $model->source ?>
 		</div>
 	</div>
+
     <div class="panel panel-warning">
 		 <div class="panel-heading">
 			<h3 class="panel-title">Yandex</h3>
 		</div>
 		<div class="panel-body">
-			<?=strlen($model->str)?>
+			<?=$model->yandex?>
 		</div>
 	</div>
 

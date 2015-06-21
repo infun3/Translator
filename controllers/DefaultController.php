@@ -4,6 +4,7 @@ namespace app\modules\translator\controllers;
 
 use app\modules\translator\models\Translate;
 use app\modules\translator\models\TranslateSearch;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
@@ -65,19 +66,19 @@ class DefaultController extends Controller
 
     public function actionMain($id)
     {
-        $src='en';
-        $dst='de';
-        $model = $this->findTranslation($dst, $id);
-        $src = $this->findTranslation($src, $id)->str;
-        $model['src']=$src;
+        $sourceLang=Yii::$app->params['src'];
+        $destinationLang=Yii::$app->params['dst'];
+        $model = $this->findTranslation($destinationLang, $id);
+        $model['source'] = $this->findTranslation($sourceLang, $id)->str;
+        if(strlen($model->str)<=1){
+            $model['yandex'] =Yii::$app->translate->translate($sourceLang, $destinationLang, $model['source'])['text'][0];}
+
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['main', 'id' => $model->id+1]);
         } else {
             return $this->render('transcard', [
                 'model' => $model,
-                'src' => $src,
-
             ]);
         }
     }
