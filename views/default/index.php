@@ -14,20 +14,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Translate', ['create'], ['class' => 'btn btn-success']) ?>
+
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
            // ['class' => 'yii\grid\SerialColumn'],
-
+            ['attribute' => 'alert',
+            'format' => 'boolean'],
             'id',
             'str',
-            'alert',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update}',
+
         ],
-    ]); ?>
+    ]]); ?>
 
 </div>

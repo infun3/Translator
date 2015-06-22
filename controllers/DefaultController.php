@@ -3,6 +3,7 @@
 namespace app\modules\translator\controllers;
 
 use app\modules\translator\models\Translate;
+use app\modules\translator\models\TransData;
 use app\modules\translator\models\TranslateSearch;
 use Yii;
 use yii\filters\VerbFilter;
@@ -64,44 +65,47 @@ class DefaultController extends Controller
         return $this->render('transcard', $model);
     }
 
-    public function actionMain($id)
+    public function actionView($id)
     {
         $direction= $this->getDirections(Yii::$app->user->identity->getId());
-        $sourceLang=$direction['src'];
-        $destinationLang=$direction['dst'];
 
-
+        return $this->render('view', [
+            'model' => $this->findTranslation($direction['dst'], $id),
+        ]);
+    }
+    public function actionUpdate($id)
+    {
+        $uid =Yii::$app->user->identity->getId();
+        $direction= $this->getDirections($uid);
         $model = $this->findTranslation($direction['dst'], $id);
-        $model['src'] = $direction['src'];
-        $model['dst'] = $direction['dst'];
-        $model['source'] = $this->findTranslation($model['src'], $id)->str;
-        if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($model['src'], $model['dst'], $model['source'])['text'][0];}
-
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['main', 'id' => $model->id+1]);
+            return $this->redirect(['update', 'id' => $model->id+1]);
         } else {
+
+            $model['src'] = $direction['src'];
+            $model['dst'] = $direction['dst'];
+            $model['source'] = $this->findTranslation($model['src'], $id)->str;
+            if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($model['src'], $model['dst'], $model['source'])['text'][0];}
+
             return $this->render('transcard', [
                 'model' => $model,
+                'source' => TransData::find()->where(['id' => $id])->one(),
             ]);
         }
     }
     protected function findTranslation($lng, $id)
     {
-      $model = Translate::setTableName($lng);
-
-            if (($model = Translate::findOne($id)) !== null) {
-                return $model;
-            } else {
-                //            return $this->redirect(['main']);
-                throw new NotFoundHttpException('need more vars'.PHP_EOL.$lng.PHP_EOL.$id);
-                //            throw new NotFoundHttpException('The requested page does not exist.');
-            }
+         $model = Translate::setTableName($lng);
+        if (($model = Translate::findOne($id)) !== null) {
+            return $model;
+        } else {
+            //            return $this->redirect(['main']);
+            throw new NotFoundHttpException('need more vars'.PHP_EOL.$lng.PHP_EOL.$id);
         }
+    }
     protected function getDirections($id)
     {
         return  (new \yii\db\Query())->select(['src','dst'])->from('translators')->where(['id' => $id])->one();
     }
-
-
 
 }

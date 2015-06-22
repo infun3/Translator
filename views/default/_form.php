@@ -32,9 +32,9 @@ use yii\widgets\ActiveForm;
 
 </div>
 <?=
-Html::a('Back', ['main', 'id' => $model->id-1], [
+Html::a('Back', ['update', 'id' => $model->id-1], [
 'class' => 'btn btn-primary',
 ])?><?=
-Html::a('Next', ['main', 'id' => $model->id+1], [
+Html::a('Next', ['update', 'id' => $model->id+1], [
 'class' => 'btn btn-default',
 ])?>
