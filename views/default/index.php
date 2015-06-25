@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -10,7 +10,6 @@ $this->title = 'Translates';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="translate-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -19,12 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
            // ['class' => 'yii\grid\SerialColumn'],
             ['attribute' => 'alert',
             'format' => 'boolean'],
             'id',
-            'str',
+            ['attribute'=>'str',
+                'label' => $directions['dst'],
+                ],
 
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}',

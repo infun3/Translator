@@ -2,13 +2,14 @@
 
 namespace app\modules\translator\controllers;
 
-use app\modules\translator\models\Translate;
+use app\modules\translator\models\Comments;
+use app\modules\translator\models\CommentsSearch;
 use app\modules\translator\models\TransData;
+use app\modules\translator\models\Translate;
 use app\modules\translator\models\TranslateSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 class DefaultController extends Controller
@@ -17,6 +18,24 @@ class DefaultController extends Controller
     public function behaviors()
     {
         return [
+
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'update'],
+                'rules' => [
+                    // deny all POST requests
+                    [
+                        'allow' => true,
+                        'verbs' => ['POST']
+                    ],
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,13 +52,14 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        $qry = Translate::setTableName('de');
         $searchModel = new TranslateSearch();
+        $searchModel->setTableName($this->getDirections()['dst']);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
-        //$dataProvider = new ActiveDataProvider(['query' => $qry::find(),]);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'directions' => $this->getDirections(),
         ]);
     }
     /**
@@ -49,21 +69,7 @@ class DefaultController extends Controller
      */
 
 
-    public function actionTest()
-    {
-        //source and destination languages
-        $src='de';
-        $dst='en';
-         $model=[
-         'src' => $this->findTranslation($src, '1'),
-         'model' => $this->findTranslation($dst, '1'),
-        ];
-/*        $model=[
-            'src' => $this->findTranslation($src, '1')->str,
-            'model' => $this->findTranslation($dst, '1'),
-        ];*/
-        return $this->render('transcard', $model);
-    }
+
 
     public function actionView($id)
     {
@@ -90,12 +96,13 @@ class DefaultController extends Controller
             return $this->render('transcard', [
                 'model' => $model,
                 'source' => TransData::find()->where(['id' => $id])->one(),
+
             ]);
         }
     }
     protected function findTranslation($lng, $id)
     {
-         $model = Translate::setTableName($lng);
+        $model = Translate::setTableName($lng);
         if (($model = Translate::findOne($id)) !== null) {
             return $model;
         } else {
@@ -103,8 +110,28 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('need more vars'.PHP_EOL.$lng.PHP_EOL.$id);
         }
     }
-    protected function getDirections($id)
+
+    /**
+     * @param $lng
+     * @param $id
+     * @return null|void|static
+     * @throws NotFoundHttpException
+     */
+    public function actionTest()
     {
+
+        return $this->runAction('//comments/create');
+    }
+
+    protected function getTranslationModels($lng, $id)
+    {
+
+        Translate::setTableName($lng);
+        if (($model = Translate::findOne($id)) !== null) {return $model;} else {throw new NotFoundHttpException("cant find $lng #$id");}
+    }
+    protected function getDirections()
+    {
+        $id= Yii::$app->user->getId();
         return  (new \yii\db\Query())->select(['src','dst'])->from('translators')->where(['id' => $id])->one();
     }
 

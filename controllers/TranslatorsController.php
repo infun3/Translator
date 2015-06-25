@@ -2,13 +2,12 @@
 
 namespace app\modules\translator\controllers;
 
-use dektrium\user\models\User;
-use Yii;
 use app\modules\translator\models\Translators;
 use app\modules\translator\models\TranslatorsSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TranslatorsController implements the CRUD actions for Translators model.
@@ -35,10 +34,11 @@ class TranslatorsController extends Controller
     {
         $searchModel = new TranslatorsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+//        $searchModel->getUsers();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'users' =>  $searchModel->getUsers(),
         ]);
     }
 
@@ -70,7 +70,7 @@ class TranslatorsController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'users' => Translators::getUsers() ,
+                'users' =>  Translators::getUsers() ,
                 'languages' => Translators::getLanguages(),
             ]);
         }

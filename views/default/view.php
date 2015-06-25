@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\translator\models\Comments;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -11,24 +12,39 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="translate-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
-    </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'str',
-            'alert',
-        ],
-    ]) ?>
-    <?=
-    Html::a('Back', ['update', 'id' => $model->id-1], [
-        'class' => 'btn btn-primary',
-    ])?><?=
-    Html::a('Next', ['update', 'id' => $model->id+1], [
-        'class' => 'btn btn-default',
-    ])?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+        <div class="panel panel-body">
+            <p>
+            </p>
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'str',
+                    'alert',
+                ],
+            ]) ?>
+            <?=Html::a('Back', ['view', 'id' => $model->id-1], ['class' => 'btn btn-primary',])?>
+            <?=Html::a('Next', ['view', 'id' => $model->id+1], ['class' => 'btn btn-default',])?>
+            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
 
-</div>
+        </div>
+    </div>
+
+    <div class="panel-group ">
+
+        <div class="panel panel-default">
+
+                <div class="panel panel-body">
+                <?= Yii::$app->runAction('//translator/comments/index')?>
+                <?= Yii::$app->runAction('//translator/comments/create')?>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>

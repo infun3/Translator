@@ -1,9 +1,8 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\VarDumper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Translators */
@@ -19,10 +18,9 @@ use yii\helpers\VarDumper;
 
     <?= $form->field($model, 'id')->dropDownList(ArrayHelper::map($users, 'id', 'username')); ?>
 
-    <?= $form->field($model, 'src')->dropDownList(ArrayHelper::map($languages, 'short', 'full' ),  ['value' => $model->src ]) ?>
+    <?= $form->field($model, 'src')->dropDownList(ArrayHelper::map($languages, 'short', 'full' ), [$model->src=>['selected'=>'selected']]) ?>
     <?=$model->src?>
-    <?= $form->field($model, 'dst')->dropDownList(ArrayHelper::map($languages, 'short', 'full'),  ['value' => $model->dst ]) ?>
-    <?=$model->dst?>
+    <?= $form->field($model, 'dst')->dropDownList(ArrayHelper::map($languages, 'short', 'full'),  [$model->src=>['selected'=>'selected']]) ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

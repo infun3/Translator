@@ -15,9 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
 
-
-
-
     <div class="panel panel-default">
 		 <div class="panel-heading">
 			<h3 class="panel-title"><?= Inflector::camelize($model->src) ?></h3>
@@ -54,4 +51,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     </div>
+
 </div>

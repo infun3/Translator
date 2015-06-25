@@ -5,7 +5,6 @@ namespace app\modules\translator\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Translate;
 
 
 /**
@@ -16,6 +15,7 @@ class TranslateSearch extends Translate
     /**
      * @inheritdoc
      */
+    public $directions;
     public function rules()
     {
         return [
