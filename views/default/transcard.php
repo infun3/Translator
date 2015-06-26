@@ -10,11 +10,10 @@ $this->title = "id: ".substr($model->id,0,10);
 $this->params['breadcrumbs'][] = ['label' => 'Translates', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="translate-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-
+<div class="panel panel-default">
+    <div class="panel-heading">
+         <h2><?= Html::encode($this->title) ?></h2>
+    </div>
     <div class="panel panel-default">
 		 <div class="panel-heading">
 			<h3 class="panel-title"><?= Inflector::camelize($model->src) ?></h3>
@@ -22,7 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-body">
 			<?= $model->source ?>
 		</div>
-	</div>    <div class="panel panel-default">
+	</div>
+    <div class="panel panel-default">
 		 <div class="panel-heading">
 			<h3 class="panel-title">Src File</h3>
 		</div>
@@ -49,7 +49,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
         </div>
-
     </div>
-
 </div>

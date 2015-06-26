@@ -10,7 +10,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Translates', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="translate-view">
+<div class="panel panel-default">
 
 
     <div class="panel panel-default">
@@ -35,15 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="panel-group ">
-
         <div class="panel panel-default">
-
                 <div class="panel panel-body">
                 <?= Yii::$app->runAction('//translator/comments/index')?>
                 <?= Yii::$app->runAction('//translator/comments/create')?>
-
-
-
                 </div>
             </div>
         </div>
