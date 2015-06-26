@@ -2,13 +2,13 @@
   "name": "infun3/Translator",
   "description": "Yii 2 Basic Project Template + dektrium/yii2-user + wfstudioru/yii2-yandex-translate-api + some logic",
   "keywords": [],
-  "homepage": "https://github.com/infun3/Translator",
+  "homepage": "https://github.com/infun3/translator",
   "type": "project",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/infun3/Translator/issues?state=open",
-    "wiki": "https://github.com/infun3/Translator/wiki",
-    "source": "https://github.com/infun3/Translator"
+    "issues": "https://github.com/infun3/translator/issues?state=open",
+    "wiki": "https://github.com/infun3/translator/wiki",
+    "source": "https://github.com/infun3/translator"
   },
   "require": {
     "dektrium/yii2-user": "0.9.*@dev",
