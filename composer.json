@@ -12,13 +12,9 @@
   },
   "require": {
     "dektrium/yii2-user": "0.9.*@dev",
-    "wfstudioru/yii2-yandex-translate-api": "*"
+    "wfstudioru/yii2-yandex-translate-api": "*@dev"
   },
   "autoload": {
     "psr-4": { "infun3\\translator\\": "" }
   },
-  "require-dev": {},
-  "config": {},
-  "scripts": {},
-  "extra": {}
 }
