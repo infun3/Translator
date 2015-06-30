@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Translate */
+/* @var $model infun3\translator\models\Translate */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -22,10 +22,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
      
-        <?= Html::submitButton($model->isNewRecord ? : 'Save & next', ['class' =>'btn btn-success pull-right',
-            'data' => [
-                'confirm' => 'everything nice and tidy?',
-            ],]) ?>
+        <?= Html::submitButton($model->isNewRecord ? : 'Save & next', ['class' =>'btn btn-success pull-right',]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -36,5 +33,5 @@ Html::a('Back', ['update', 'id' => $model->id-1], [
 'class' => 'btn btn-primary',
 ])?><?=
 Html::a('Next', ['update', 'id' => $model->id+1], [
-'class' => 'btn btn-default',
+'class' => 'btn btn-warning',
 ])?>

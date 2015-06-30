@@ -2,6 +2,7 @@
 
 namespace infun3\translator\controllers;
 
+use infun3\translator\models\Comments;
 use infun3\translator\models\TransData;
 use infun3\translator\models\Translate;
 use infun3\translator\models\TranslateSearch;
@@ -19,17 +20,27 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'update'],
                 'rules' => [
+                    [
+                        'allow' => false,
+                        'actions' => ['view', 'index', 'update'],
+                        'roles' => ['?'],
+                    ],  [
+                        'allow' => true,
+                        'actions' => ['login', 'signup'],
+                        'roles' => ['?'],
+                    ],
                     // deny all POST requests
                     [
                         'allow' => true,
-                        'verbs' => ['POST']
                     ],
                     // allow POST
                     [
+
                         'allow' => true,
+                        'actions' => ['view', 'index', 'update'],
                         'roles' => ['@'],
+                        'verbs' => ['POST']
                     ],
                     // everything else is denied
                 ],
@@ -50,6 +61,7 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
+
         $searchModel = new TranslateSearch();
         $searchModel->setTableName($this->getDirections()['dst']);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
@@ -115,10 +127,16 @@ class DefaultController extends Controller
      * @return null|void|static
      * @throws NotFoundHttpException
      */
-    public function actionTest()
+    public function actionTest($id)
     {
+        $direction= $this->getDirections(Yii::$app->user->identity->getId());
 
-        return $this->runAction('//comments/create');
+        return $this->render('view', [
+            'model' => $this->findTranslation($direction['dst'], $id),
+            'comments' => Comments::find()->where(['str_id' => $id])->all(),
+        ]);
+
+
     }
 
     protected function getTranslationModels($lng, $id)
