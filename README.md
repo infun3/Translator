@@ -4,7 +4,7 @@
         ],
          'user' => [
             'class' => 'dektrium\user\Module',
-            admins' => ['admin'],
+            'admins' => ['admin'],
         ],
     ],
     'components' => [
