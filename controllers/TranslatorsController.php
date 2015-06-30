@@ -16,11 +16,32 @@ class TranslatorsController extends Controller
 {
     public function behaviors()
     {
-        return [
+        return [ 'access' => [
+            'class' => \yii\filters\AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['login', 'signup'],
+                    'roles' => ['?'],
+                ],
+                // deny all POST requests
+                [
+                    'allow' => true,
+                    'verbs' => ['POST']
+                ],
+                // allow POST
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+                // everything else is denied
+            ],
+        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+
                 ],
             ],
         ];

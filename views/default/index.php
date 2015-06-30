@@ -9,6 +9,8 @@ use yii\helpers\Html;
 $this->title = 'Translates';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?= $this->render('/default/_menu'); ?>
 <div class="translate-index">
     <h1><?= Html::encode($this->title) ?></h1>
 

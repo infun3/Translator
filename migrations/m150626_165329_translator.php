@@ -31,6 +31,38 @@ class m150626_165329_translator extends Migration
                 'full' => 'TINYTEXT NOT NULL',
                 'alert' => 'TINYINT(1) NULL',
             ], $tableOptions);
+
+            $this->batchInsert('{{%languages}}',
+                [
+                    'short',
+                    'full',
+                ],
+                [
+                    [
+                        'en',
+                        'English',
+                    ], [
+                    'ru',
+                    'Russian',
+                ], [
+                    'de',
+                    'German',
+                ], [
+                    'pl',
+                    'Polish',
+                ], [
+                    'pt',
+                    'Portuguese',
+                ], [
+                    'es',
+                    'Spanish',
+                ],[
+                    'tr',
+                    'Turkish',
+                ],
+
+                ]
+            );
         }
         $tableOptions = "";
         if ($this->db->driverName == "mysql") {
