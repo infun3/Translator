@@ -26,7 +26,7 @@ class DefaultController extends Controller
                         'allow' => true,
                         'verbs' => ['POST']
                     ],
-                    // allow authenticated users
+                    // allow POST
                     [
                         'allow' => true,
                         'roles' => ['@'],
