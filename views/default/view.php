@@ -1,6 +1,5 @@
 <?php
 
-use app\modules\translator\models\Comments;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 

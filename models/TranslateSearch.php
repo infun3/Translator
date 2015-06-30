@@ -1,11 +1,10 @@
 <?php
 
-namespace app\modules\translator\models;
+namespace infun3\translator\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\translator\models\Translate;
 
 
 /**

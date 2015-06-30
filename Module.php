@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\translator;
+namespace infun3\translator;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\translator\controllers';
+    public $controllerNamespace = 'infun3\translator\controllers';
 
     public function init()
     {

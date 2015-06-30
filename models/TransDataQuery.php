@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\translator\models;
+namespace infun3\translator\models;
 
 /**
  * This is the ActiveQuery class for [[TransData]].

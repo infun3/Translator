@@ -1,12 +1,10 @@
 <?php
 
-namespace app\modules\translator\controllers;
+namespace infun3\translator\controllers;
 
-use app\modules\translator\models\Comments;
-use app\modules\translator\models\CommentsSearch;
-use app\modules\translator\models\TransData;
-use app\modules\translator\models\Translate;
-use app\modules\translator\models\TranslateSearch;
+use infun3\translator\models\TransData;
+use infun3\translator\models\Translate;
+use infun3\translator\models\TranslateSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

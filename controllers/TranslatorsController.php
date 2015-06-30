@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\translator\controllers;
+namespace infun3\translator\controllers;
 
-use app\modules\translator\models\Translators;
-use app\modules\translator\models\TranslatorsSearch;
+use infun3\translator\models\Translators;
+use infun3\translator\models\TranslatorsSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
