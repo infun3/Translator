@@ -1,6 +1,6 @@
     'modules'    => [
         'translator' => [
-            'class' => 'infun3\translator',
+            'class' => 'infun3\translator\Module',
         ],
          'user' => [
             'class' => 'dektrium\user\Module',
