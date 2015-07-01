@@ -51,3 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<div class="panel-group ">
+    <div class="panel panel-default">
+        <div class="panel panel-body">
+            <?= Yii::$app->runAction('/translator/comments/index')?>
+            <?= Yii::$app->runAction('/translator/comments/create')?>
+        </div>
+    </div>
+</div>
+</div>
