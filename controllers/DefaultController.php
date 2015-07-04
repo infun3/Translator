@@ -2,11 +2,11 @@
 
 namespace infun3\translator\controllers;
 
-use infun3\translator\models\Comments;
 use infun3\translator\models\TransData;
 use infun3\translator\models\Translate;
 use infun3\translator\models\TranslateSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -91,6 +91,7 @@ class DefaultController extends Controller
     }
     public function actionUpdate($id)
     {
+
         $uid =Yii::$app->user->identity->getId();
         $direction= $this->getDirections($uid);
         $model = $this->findTranslation($direction['dst'], $id);
@@ -102,13 +103,27 @@ class DefaultController extends Controller
             $model['dst'] = $direction['dst'];
             $model['source'] = $this->findTranslation($model['src'], $id)->str;
             if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($model['src'], $model['dst'], $model['source'])['text'][0];}
+            $sources['src'] = new Translate;
+            $sources['dst'] = new Translate;
+            $sources['src']=$sources['src']->findLastXtranslations($direction['src'], $id);
+            $sources['dst'] =$sources['dst']->findLastXtranslations($direction['dst'], $id);
 
+
+            /*    $sources = (new \yii\db\Query())
+                    ->select(['str'])
+                    ->from('trans_'.$direction['src'])
+                    ->where(['between', 'id', $id-3, $id ])
+                    ->limit(3)
+                    ->all();
+                */
             return $this->render('transcard', [
                 'model' => $model,
                 'source' => TransData::find()->where(['id' => $id])->one(),
-
+                'sources' => $sources,
             ]);
         }
+
+
     }
     protected function findTranslation($lng, $id)
     {
@@ -121,6 +136,7 @@ class DefaultController extends Controller
         }
     }
 
+
     /**
      * @param $lng
      * @param $id
@@ -129,12 +145,37 @@ class DefaultController extends Controller
      */
     public function actionTest($id)
     {
-        $direction= $this->getDirections(Yii::$app->user->identity->getId());
 
-        return $this->render('view', [
-            'model' => $this->findTranslation($direction['dst'], $id),
-            'comments' => Comments::find()->where(['str_id' => $id])->all(),
-        ]);
+        $uid =Yii::$app->user->identity->getId();
+        $direction= $this->getDirections($uid);
+        $model = $this->findTranslation($direction['dst'], $id);
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['update', 'id' => $model->id+1]);
+        } else {
+
+            $model['src'] = $direction['src'];
+            $model['dst'] = $direction['dst'];
+            $model['source'] = $this->findTranslation($model['src'], $id)->str;
+            if(strlen($model->str)<=1){$model['yandex'] =Yii::$app->translate->translate($model['src'], $model['dst'], $model['source'])['text'][0];}
+            $sources['src'] = new Translate;
+            $sources['dst'] = new Translate;
+            $sources['src']=$sources['src']->findLastXtranslations($direction['src'], $id);
+           $sources['dst'] =$sources['dst']->findLastXtranslations($direction['dst'], $id);
+
+
+        /*    $sources = (new \yii\db\Query())
+                ->select(['str'])
+                ->from('trans_'.$direction['src'])
+                ->where(['between', 'id', $id-3, $id ])
+                ->limit(3)
+                ->all();
+            */
+            return $this->render('transcard', [
+                'model' => $model,
+                'source' => TransData::find()->where(['id' => $id])->one(),
+                'sources' => $sources,
+            ]);
+        }
 
 
     }
