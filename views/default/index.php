@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Progress;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -14,9 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="translate-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-
-    </p>
+    <?= Progress::widget([
+    'percent' => 65,
+    'barOptions' => [
+    'class' => 'progress-bar-danger'
+    ]
+    ]);
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

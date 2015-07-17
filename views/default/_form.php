@@ -15,13 +15,11 @@ use yii\widgets\ActiveForm;
     <?= Html::activeHiddenInput($model, 'id', ['value' => $model->id])?>
 
     <?= Html::activeHiddenInput($model, 'user_id', ['value' => Yii::$app->user->identity->getId()])?>
-
-    <?= $form->field($model, 'str')->textarea() ?>
-
-    <?= $form->field($model, 'alert')->checkbox(array('label'=>''))->hint('If u want to mark this one')->label('Mark'); ?>
-
+    <?= $form->field($model, 'str')->textarea()->label(false) ?>
+    <?= $form->field($model, 'alert',  [
+        'template' => "<div class=\" pull-right\">{input}</div>\n",
+    ])->checkbox(array('label'=>'Mark')); ?>
     <div class="form-group">
-     
         <?= Html::submitButton($model->isNewRecord ? : 'Save & next', ['class' =>'btn btn-success pull-right',]) ?>
     </div>
 
