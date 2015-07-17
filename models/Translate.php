@@ -66,8 +66,8 @@ class Translate extends \yii\db\ActiveRecord
     public function findLastXtranslations($lng, $id, $x=5)
     {
         Translate::setTableName($lng);
-        if (($model =Translate::find()->where(['between', 'id', $id-$x, $id])->select(['id','str'])) !== null) {
-            return $model->limit($x)->all();
+        if (($model = Translate::find()->where(['between', 'id', $id-$x, $id-1])->select(['id','str'])) !== null) {
+            return $model->limit($x)->orderBy('id DESC')->all();
         } else {
             //            return $this->redirect(['main']);
             throw new NotFoundHttpException('need more vars'.PHP_EOL.$lng.PHP_EOL.$id);
