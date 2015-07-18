@@ -15,13 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="translate-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= Progress::widget([
-    'percent' => 65,
-    'barOptions' => [
-    'class' => 'progress-bar-danger'
-    ]
-    ]);
-    ?>
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
